@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+  
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  email          String     @id @db.VarChar(100)
+  full_name      String?    @db.VarChar(100)
+  password       String    @db.VarChar(100)
+  phone_number   String?      
+  photo_profile  String?    @db.VarChar(100)
+  street         String?    @db.VarChar(100)
+  city           String?    @db.VarChar(100)
+  province       String?    @db.VarChar(100)
+  country        String?    @db.VarChar(100)
+  city_id        Int?
+  postal_code    String?    @db.VarChar(100)
+  token          String?    
+  shoppingCart ShoppingCart?
+  transactions Transaction[]
+
+  emailVerification EmailVerification?   @relation(fields: [emailVerificationId], references: [id])
+  emailVerificationId Int? @unique
+
+  @@map("users")
+}
+
+model EmailVerification {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  code        String
+  createdAt   DateTime @default(now())
+  verified    Boolean  @default(false)
+  isRegistered Boolean @default(false)
+  user        User?    @relation
+
+  @@map("email_verification")
+}
+
+model Category {
+  id              Int         @id @default(autoincrement())
+  category_name   String      @db.VarChar(100)
+  products        Product[]
+  
+  @@map("categories")
+}
+
+model Product {
+  id            Int           @id @default(autoincrement())
+  product_name  String        @db.VarChar(100)
+  description   String        @db.VarChar(100)
+  stock         Int
+  price         Int
+  color         String[]
+  size          String[]
+  image         String[]
+  weight        Int
+  rating        Float @default(0)
+  sales         Int @default(0)
+
+  category      Category      @relation(fields: [category_id], references: [id])
+  category_id   Int
+
+  ShoppingCarts ShoppingCartItem[]
+
+  Transaction TransactionsItem[]
+
+  @@map("products")
+}
+
+
+model ShoppingCart {
+  id            Int           @id @default(autoincrement())
+  quantity      Int
+  total         Int
+
+  user          User          @relation(fields: [user_email], references: [email])
+  user_email    String @unique
+
+  products ShoppingCartItem[]
+  
+  @@map("shopping_carts")
+}
+
+model ShoppingCartItem {
+  quantity Int
+  total Int
+  selectedSize String?
+  selectedColor String?
+
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+
+  shoppingCart ShoppingCart @relation(fields: [shoppingCartId], references: [id])
+  shoppingCartId Int
+
+  @@id([productId, shoppingCartId])
+  @@map("shoppingCartItems")
+}
+
+model Transaction {
+  id String                 @id @db.VarChar(110)
+  total Int
+  status transactions_status
+  service_fee Int
+  delivery_details Json?
+  customer_name String @db.VarChar(255)
+  customer_email String @db.VarChar(255)
+  snap_token String? @db.VarChar(255)
+  snap_redirect_url String? @db.VarChar(255)
+  payment_method String? @db.VarChar(110)
+  createad_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  product TransactionsItem[]
+
+  user User @relation(fields: [user_email], references: [email])
+  user_email String
+
+  @@map("transactions")
+}
+
+model TransactionsItem {
+  id String @id @db.VarChar(110)
+  product_name String @db.VarChar(255)
+  price Int
+  quantity Int
+  createad_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+  
+  transaction Transaction @relation(fields: [transaction_id], references: [id])
+  transaction_id String @db.VarChar(110)
+  @@map("transactions_item")
+}
+
+enum transactions_status {
+  PENDING_PAYMENT
+  PAID
+  CANCELED
+}
