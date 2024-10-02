@@ -79,11 +79,13 @@ export const SearchPage = () => {
                 </Box>
               ))}
 
-              <Pagination
+             <Box display={'flex'} flexWrap={'nowrap'}>
+             <Pagination
                 currentPage={currentPage}
                 totalPages={productsResult.totalPages}
                 onPageChange={handlePageChange} 
               />
+             </Box>
             </Box>
           </Box>
         </Box>

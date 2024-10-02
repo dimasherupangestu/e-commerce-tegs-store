@@ -9,7 +9,7 @@ const useShoppingCart = () => {
      
         user_email: ''  
     });
-    console.log('total',productsInShoppingCart)
+    // console.log('total',productsInShoppingCart)
 
     const getShoppingCart = async() => {
         try {

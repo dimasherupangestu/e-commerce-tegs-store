@@ -7,11 +7,16 @@ import { useNavigate } from "react-router-dom";
 export function useProductDetail(productId: number) {
     const [productData, setProductData] = useState<IProductDetail>();
     const [productSimilarData, setProductSimilarData] = useState<IProductDetail[]>();
+    console.log('productData',productData)
+    
    const naviget = useNavigate();
     async function getProductDetail() {
         try {
             const response = await API.get(`/product-detail/${productId}`);
-            setProductData(response.data.data);
+            setProductData(response.data.data); 
+            // if(response.data.data.id != productId) {
+              
+            // }
         } catch (error) {
             console.log("Error getting product detail: ", error);
         }

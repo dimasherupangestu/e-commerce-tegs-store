@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   HStack,
   Image,
   Input,
@@ -21,12 +22,16 @@ import useAuthStore from "../store/useAuthStore";
 import { useToast } from '@chakra-ui/react'
 import useSearch from "../Pages/Search/hooks/useSearch";
 import { APIWithToken } from "../libs/axios";
+import useShoppingCart from "../Pages/shoppingCart/hooks/useShoppingCart";
 
 export const Navbar = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const {productsInShoppingCart} = useShoppingCart();
   const logout = useAuthStore((state) => state.logout);
   const { handleInputChange, handleSearch, searchParams, handleKeyDown } = useSearch();
   const navigate = useNavigate();
+  console.log('tes', productsInShoppingCart)
+  let keranjangId = productsInShoppingCart.products.length || 0
 const toast = useToast()
   const handleCart = () => {
     if (isAuthenticated()) {
@@ -123,8 +128,14 @@ const toast = useToast()
             </InputGroup>
           </Box>
           <Box w={"10rem"} display={"flex"} alignItems={"center"}>
-            <Box color={"white"} mr={3} _hover={{ cursor: "pointer" }} onClick={handleCart}>
+            <Box color={"white"} mr={3} _hover={{ cursor: "pointer" }} onClick={handleCart} pos={"relative"}>
               <LuShoppingCart size={23} />
+             {keranjangId > 0 && (<Center pos={"absolute"} top={-2} left={4} bg={"#fefefe"} color={"#00AA5B"}
+               w={'1.1rem'} h={'1.1rem'} textAlign={'center'} mx={'auto'} fontSize={'0.6rem'} borderRadius={"100%"}>
+                <Text color={'#00AA5B'} textAlign={"center"} m={'auto'} mt={'1px'} fontWeight={'bold'}>
+                 {keranjangId}
+                  </Text>
+               </Center>)}
             </Box>
             <Box ml={3}>
               <HStack>

@@ -12,6 +12,7 @@ import CategoryPage from "./Pages/category/CategoryPage";
 import { ShoppingCart } from "./Pages/shoppingCart/ShoppingCart";
 import Checkout from "./Pages/checkout";
 import OrderStatusPage from "./Pages/order-status/OrderStatusPage";
+import Page404 from "./Pages/NotFound";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-status" element={<OrderStatusPage />} />
         <Route path="/order-status/:id" element={<OrderStatusPage />} />
+        {/* <Route path="/*" element={<Page404 />} /> */}
       </Routes>
       <ToastContainer />
     </>

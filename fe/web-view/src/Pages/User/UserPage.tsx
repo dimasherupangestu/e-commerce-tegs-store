@@ -18,7 +18,7 @@ export const UserPage = () => {
   return (
     <Box w="100%" h="100%">
       <Layout>
-        <Flex height="100vh">
+        <Flex height={'auto'}>
           {/* Sidebar (TabList) */}
           <Box width="250px" bg="#f8f8f8" p="10">
             <Tabs orientation="vertical">
