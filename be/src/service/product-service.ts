@@ -102,7 +102,7 @@ export class ProductService {
         });
         const reversedProducts = products.reverse();
         const productResponses = reversedProducts.map(product => toProductResponse(product)).reverse();
-        console.log('productResponses', productResponses);
+        // console.log('productResponses', productResponses);
         return productResponses;
     }
     

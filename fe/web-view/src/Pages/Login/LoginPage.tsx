@@ -1,7 +1,21 @@
 import { Box, Center, Flex, Image } from "@chakra-ui/react";
 import { FormLogin } from "./components/FormLogin";
+import useAuthStore from "../../store/useAuthStore";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export const LoginPage = () => {
+  const setToken = useAuthStore((state) => state.setToken); // Zustand action untuk set token
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    // Mengambil token dari URL
+    const token = searchParams.get("token");
+    if (token) {
+      setToken(token); // Set token di Zustand store
+    }
+  }, [searchParams, setToken]);
+
   return (
     <Box w={"100%"} h={"100vh"} minHeight={"100%"}>
       <Box w={"100%"} h={"100%"} bg={"#fff"}>

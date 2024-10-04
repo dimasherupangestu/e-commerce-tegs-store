@@ -8,7 +8,7 @@ import { ResponseError } from "../error/response.error";
 export class ProductController {
     static async create(req: UserRequest & Request, res: Response, next: NextFunction) {
         try {
-            console.log(req.body)
+            // console.log(req.body)
             let imagePaths: string[] = [];
 
             if (req.files && req.files.length) {
@@ -71,7 +71,7 @@ export class ProductController {
                 id : Number(req.params.productId)
             };
 
-            console.log(request)
+            // console.log(request)
 
             const response = await ProductService.update(req.user!, request);
 

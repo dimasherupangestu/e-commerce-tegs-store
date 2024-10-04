@@ -11,11 +11,13 @@ import useBestProducts from "./hooks/useBestProducts";
 import useRecommendedProducts from "./hooks/useRecommendedProducts";
 import { ProductsCarousel } from "../../components/ProductsCaraousel";
 import { CardShop } from "../../components/CardShop";
+import { useParams } from "react-router-dom";
 
 export const HomePage = () => {
+  const param = useParams();
   const user = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
-  console.log("user: ", user, "token: ", token);
+  console.log("user: ", user, "token: ", token, 'param: ', param);
   const { bestProducts } = useBestProducts();
   const { recommendedProducts } = useRecommendedProducts();
 

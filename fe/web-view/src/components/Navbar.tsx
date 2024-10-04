@@ -23,15 +23,21 @@ import { useToast } from '@chakra-ui/react'
 import useSearch from "../Pages/Search/hooks/useSearch";
 import { APIWithToken } from "../libs/axios";
 import useShoppingCart from "../Pages/shoppingCart/hooks/useShoppingCart";
+import { useEffect, useState } from "react";
 
 export const Navbar = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+ const [keranjangId, setKeranjangId] = useState(0);
   const {productsInShoppingCart} = useShoppingCart();
   const logout = useAuthStore((state) => state.logout);
   const { handleInputChange, handleSearch, searchParams, handleKeyDown } = useSearch();
   const navigate = useNavigate();
-  console.log('tes', productsInShoppingCart)
-  let keranjangId = productsInShoppingCart.products.length || 0
+  // console.log('tes', productsInShoppingCart)
+  useEffect(() => {
+    setKeranjangId(productsInShoppingCart.products.length);
+  }, [productsInShoppingCart])
+ 
+  
 const toast = useToast()
   const handleCart = () => {
     if (isAuthenticated()) {
