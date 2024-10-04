@@ -80,7 +80,7 @@ export class AuthController {
 
             const payload = { email: data.email };
             const authToken = jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
-
+        
             if (user) {
                 user = await prismaClient.user.update({
                     where: { email: data.email },
