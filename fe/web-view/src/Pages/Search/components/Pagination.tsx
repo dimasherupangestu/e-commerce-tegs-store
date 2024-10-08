@@ -2,7 +2,7 @@ import { Button, HStack, Text } from "@chakra-ui/react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     return (
-        <HStack spacing={4} justifyContent="center" mt={8} >
+        <HStack spacing={4} justifyContent="center" mt={8}  >
             <Button
                 onClick={() => onPageChange(currentPage - 1)}
                 isDisabled={currentPage === 1}
